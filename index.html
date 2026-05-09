@@ -1,0 +1,1800 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATITAYA | Professional Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+–cream: #F5F0E8;
+–cream-dark: #EDE5D4;
+–taupe: #D4C5A9;
+–brown-light: #9C7E5A;
+–brown: #6B4C2A;
+–brown-dark: #3E2B16;
+–bronze: #8B6340;
+–text-main: #3E2B16;
+–text-muted: #7A5C3A;
+–card-bg: #FAF6EF;
+–card-border: rgba(107,76,42,0.2);
+}
+
+body {
+background: var(–cream);
+font-family: ‘Jost’, sans-serif;
+color: var(–text-main);
+min-height: 100vh;
+overflow-x: hidden;
+}
+
+/* Subtle warm texture overlay */
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background:
+radial-gradient(ellipse 80% 60% at 10% 20%, rgba(212,197,169,0.25) 0%, transparent 60%),
+radial-gradient(ellipse 60% 80% at 90% 80%, rgba(155,126,90,0.12) 0%, transparent 50%);
+pointer-events: none;
+z-index: 0;
+}
+
+/* ── HEADER ── */
+header {
+position: relative;
+z-index: 10;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 22px 48px;
+background: var(–cream);
+border-bottom: 1px solid var(–card-border);
+}
+
+.logo-block h1 {
+font-family: ‘Cormorant Garamond’, serif;
+font-weight: 600;
+font-size: 17px;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(–brown-dark);
+line-height: 1.2;
+}
+.logo-block span {
+font-family: ‘Jost’, sans-serif;
+font-weight: 300;
+font-size: 10px;
+letter-spacing: 0.28em;
+text-transform: uppercase;
+color: var(–brown-light);
+display: block;
+margin-top: 3px;
+}
+
+nav {
+display: flex;
+gap: 32px;
+align-items: center;
+}
+nav a {
+font-family: ‘Jost’, sans-serif;
+font-size: 11px;
+font-weight: 500;
+letter-spacing: 0.22em;
+text-transform: uppercase;
+text-decoration: none;
+color: var(–text-main);
+transition: color 0.2s;
+position: relative;
+}
+nav a::after {
+content: ‘’;
+position: absolute;
+bottom: -2px;
+left: 0; right: 0;
+height: 1px;
+background: var(–brown);
+transform: scaleX(0);
+transition: transform 0.25s;
+}
+nav a:hover::after { transform: scaleX(1); }
+nav a:hover { color: var(–brown); }
+nav a.active { color: var(–brown); }
+nav a.active::after { transform: scaleX(1); }
+
+.header-social {
+display: flex;
+gap: 10px;
+align-items: center;
+}
+.social-btn {
+width: 32px; height: 32px;
+border-radius: 50%;
+border: 1.5px solid var(–brown-light);
+display: flex; align-items: center; justify-content: center;
+color: var(–brown-light);
+text-decoration: none;
+font-size: 13px;
+transition: all 0.2s;
+background: transparent;
+}
+.social-btn:hover {
+background: var(–brown);
+border-color: var(–brown);
+color: var(–cream);
+transform: scale(1.08);
+}
+
+/* ── HERO / INTRO ── */
+.hero {
+position: relative;
+z-index: 1;
+padding: 56px 48px 40px;
+display: flex;
+align-items: flex-end;
+justify-content: space-between;
+gap: 24px;
+}
+
+.hero-text h2 {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 72px;
+font-weight: 300;
+color: var(–brown-dark);
+line-height: 0.95;
+letter-spacing: -0.01em;
+}
+.hero-text h2 em {
+font-style: italic;
+color: var(–bronze);
+}
+.hero-sub {
+margin-top: 16px;
+font-size: 12px;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–brown-light);
+font-weight: 400;
+}
+
+.hero-actions {
+display: flex;
+flex-direction: column;
+align-items: flex-end;
+gap: 16px;
+}
+.btn-connect {
+display: inline-block;
+padding: 12px 32px;
+border: 1.5px solid var(–brown);
+color: var(–brown-dark);
+font-family: ‘Jost’, sans-serif;
+font-size: 11px;
+font-weight: 500;
+letter-spacing: 0.22em;
+text-transform: uppercase;
+text-decoration: none;
+border-radius: 40px;
+transition: all 0.25s;
+background: transparent;
+cursor: pointer;
+}
+.btn-connect:hover {
+background: var(–brown);
+color: var(–cream);
+}
+.tagline {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 13px;
+font-weight: 400;
+font-style: italic;
+color: var(–text-muted);
+letter-spacing: 0.04em;
+}
+
+/* ── SECTION LABEL ── */
+.section-wrap {
+position: relative;
+z-index: 1;
+padding: 0 48px 48px;
+}
+
+.section-label {
+display: flex;
+align-items: center;
+gap: 16px;
+margin-bottom: 24px;
+}
+.section-label h3 {
+font-family: ‘Jost’, sans-serif;
+font-size: 10px;
+font-weight: 500;
+letter-spacing: 0.3em;
+text-transform: uppercase;
+color: var(–brown-light);
+}
+.section-label::before, .section-label::after {
+content: ‘’;
+flex: 1;
+height: 1px;
+background: var(–card-border);
+}
+.section-label::before { max-width: 40px; flex: none; }
+.section-label::after {}
+
+/* ── CARDS SHARED ── */
+.card {
+background: var(–card-bg);
+border: 1px solid var(–card-border);
+border-radius: 20px;
+padding: 28px;
+position: relative;
+overflow: hidden;
+transition: transform 0.25s, box-shadow 0.25s;
+}
+.card:hover {
+transform: translateY(-3px);
+box-shadow: 0 12px 40px rgba(62,43,22,0.1);
+}
+.card::before {
+content: ‘’;
+position: absolute;
+top: -60px; right: -60px;
+width: 180px; height: 180px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(212,197,169,0.25) 0%, transparent 70%);
+pointer-events: none;
+}
+
+.card-tag {
+display: inline-block;
+font-size: 9px;
+font-weight: 500;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–brown-light);
+background: rgba(107,76,42,0.08);
+padding: 4px 10px;
+border-radius: 20px;
+margin-bottom: 12px;
+}
+.card h4 {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 22px;
+font-weight: 600;
+color: var(–brown-dark);
+margin-bottom: 6px;
+line-height: 1.2;
+}
+.card .card-desc {
+font-size: 12px;
+color: var(–text-muted);
+letter-spacing: 0.02em;
+margin-bottom: 18px;
+font-style: italic;
+}
+
+/* ── SECTION 1: WORK & EXPERIENCE (2-col) ── */
+.work-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 20px;
+}
+
+/* Presentation card content */
+.slide-miniatures {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 8px;
+margin-bottom: 14px;
+}
+.slide-mini {
+border-radius: 8px;
+border: 1px solid var(–card-border);
+aspect-ratio: 16/9;
+overflow: hidden;
+position: relative;
+background: var(–cream-dark);
+}
+.slide-mini .s-bar {
+position: absolute;
+bottom: 0; left: 0; right: 0;
+height: 30%;
+background: var(–brown);
+opacity: 0.9;
+}
+.slide-mini .s-title {
+position: absolute;
+top: 8px; left: 6px;
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 7px;
+font-weight: 600;
+color: var(–brown-dark);
+}
+.slide-mini .s-dot {
+position: absolute;
+top: 8px; right: 6px;
+width: 4px; height: 4px;
+border-radius: 50%;
+background: var(–bronze);
+}
+.slide-mini .s-lines { position: absolute; top: 18px; left: 6px; right: 6px; }
+.slide-mini .s-lines span {
+display: block;
+height: 1.5px;
+background: rgba(62,43,22,0.25);
+margin-bottom: 2px;
+border-radius: 2px;
+}
+.slide-mini .s-lines span:nth-child(2) { width: 70%; }
+.slide-mini .s-lines span:nth-child(3) { width: 50%; }
+
+.pres-screen {
+background: var(–cream-dark);
+border-radius: 10px;
+padding: 14px;
+border: 1px solid var(–card-border);
+position: relative;
+}
+.pres-screen-inner {
+background: var(–brown-dark);
+border-radius: 6px;
+padding: 12px 16px;
+display: flex;
+align-items: center;
+gap: 12px;
+}
+.pres-logo-e {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 28px;
+font-weight: 600;
+color: var(–taupe);
+line-height: 1;
+letter-spacing: -0.02em;
+}
+.pres-meta { flex: 1; }
+.pres-meta p {
+font-family: ‘Jost’, sans-serif;
+font-size: 8px;
+color: var(–taupe);
+letter-spacing: 0.1em;
+text-transform: uppercase;
+margin-bottom: 4px;
+}
+.pres-meta .pres-title {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 13px;
+font-weight: 500;
+color: var(–cream);
+letter-spacing: 0.01em;
+}
+
+/* Experience card content */
+.exp-list { margin-bottom: 16px; }
+.exp-item {
+display: flex;
+gap: 12px;
+padding: 10px 0;
+border-bottom: 1px solid rgba(107,76,42,0.1);
+align-items: flex-start;
+}
+.exp-item:last-child { border-bottom: none; }
+.exp-year {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 13px;
+font-weight: 500;
+color: var(–brown-light);
+min-width: 36px;
+padding-top: 1px;
+}
+.exp-content h5 {
+font-size: 13px;
+font-weight: 500;
+color: var(–brown-dark);
+margin-bottom: 2px;
+}
+.exp-content p {
+font-size: 11px;
+color: var(–text-muted);
+font-style: italic;
+}
+.exp-badge {
+margin-left: auto;
+width: 22px; height: 22px;
+border-radius: 50%;
+border: 1px solid var(–bronze);
+display: flex; align-items: center; justify-content: center;
+flex-shrink: 0;
+}
+.exp-badge svg { width: 11px; height: 11px; fill: none; stroke: var(–bronze); stroke-width: 2; }
+
+.diploma-graphic {
+background: linear-gradient(135deg, var(–cream-dark) 0%, var(–taupe) 100%);
+border-radius: 10px;
+padding: 14px 18px;
+border: 1px solid rgba(107,76,42,0.25);
+display: flex;
+align-items: center;
+gap: 14px;
+position: relative;
+overflow: hidden;
+}
+.diploma-graphic::before {
+content: ‘’;
+position: absolute;
+top: -20px; left: -20px;
+width: 80px; height: 80px;
+border-radius: 50%;
+border: 1px solid rgba(62,43,22,0.12);
+}
+.diploma-seal {
+width: 40px; height: 40px;
+border-radius: 50%;
+border: 2px solid var(–brown);
+display: flex; align-items: center; justify-content: center;
+flex-shrink: 0;
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 14px;
+font-weight: 600;
+color: var(–brown-dark);
+}
+.diploma-text p {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 12px;
+font-weight: 600;
+color: var(–brown-dark);
+text-transform: uppercase;
+letter-spacing: 0.08em;
+}
+.diploma-text span {
+font-size: 10px;
+color: var(–text-muted);
+font-style: italic;
+}
+
+/* ── SECTION 2: 4-CARD GRID ── */
+.activity-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+grid-template-rows: auto auto;
+gap: 20px;
+}
+
+/* Event card */
+.event-img {
+width: 100%;
+height: 120px;
+border-radius: 12px;
+overflow: hidden;
+margin-bottom: 14px;
+position: relative;
+background: var(–cream-dark);
+}
+.event-scene {
+width: 100%; height: 100%;
+position: relative;
+overflow: hidden;
+}
+/* People at workshop SVG-style */
+.event-scene .bg-rect {
+position: absolute; inset: 0;
+background: linear-gradient(160deg, #C4A882 0%, #8B6B47 100%);
+}
+.event-scene .table-rect {
+position: absolute;
+bottom: 22px; left: 10%; right: 10%;
+height: 8px;
+background: rgba(62,43,22,0.4);
+border-radius: 4px;
+}
+.person {
+position: absolute;
+bottom: 28px;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 1px;
+}
+.p-head {
+width: 12px; height: 12px;
+border-radius: 50%;
+background: rgba(245,240,232,0.75);
+}
+.p-body {
+width: 16px; height: 18px;
+border-radius: 3px 3px 0 0;
+}
+.event-label {
+position: absolute;
+top: 8px; left: 10px;
+font-size: 8px;
+font-weight: 500;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: rgba(245,240,232,0.85);
+background: rgba(62,43,22,0.4);
+padding: 3px 8px;
+border-radius: 10px;
+}
+.event-count {
+position: absolute;
+bottom: 8px; right: 10px;
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 11px;
+color: rgba(245,240,232,0.9);
+font-style: italic;
+}
+
+/* Skills card */
+.skill-bars { margin-bottom: 14px; }
+.skill-row {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-bottom: 10px;
+}
+.skill-name {
+font-size: 10px;
+font-weight: 500;
+letter-spacing: 0.05em;
+color: var(–text-main);
+min-width: 80px;
+}
+.skill-track {
+flex: 1;
+height: 6px;
+background: rgba(107,76,42,0.12);
+border-radius: 3px;
+overflow: hidden;
+}
+.skill-fill {
+height: 100%;
+border-radius: 3px;
+background: linear-gradient(90deg, var(–brown-light), var(–bronze));
+transition: width 0.8s ease;
+}
+.skill-pct {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 13px;
+font-weight: 500;
+color: var(–bronze);
+min-width: 30px;
+text-align: right;
+}
+.badges {
+display: flex;
+gap: 6px;
+flex-wrap: wrap;
+}
+.badge {
+font-size: 9px;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(–brown-dark);
+background: rgba(107,76,42,0.1);
+border: 1px solid var(–card-border);
+padding: 3px 9px;
+border-radius: 20px;
+display: flex; align-items: center; gap: 4px;
+}
+.badge::before {
+content: ‘’;
+width: 5px; height: 5px;
+border-radius: 50%;
+background: var(–bronze);
+flex-shrink: 0;
+}
+
+/* Social card */
+.social-previews {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 8px;
+margin-bottom: 14px;
+}
+.social-preview {
+border-radius: 10px;
+border: 1px solid var(–card-border);
+overflow: hidden;
+position: relative;
+aspect-ratio: 4/5;
+background: var(–cream-dark);
+}
+.sp-header {
+padding: 5px 6px;
+display: flex;
+align-items: center;
+gap: 4px;
+border-bottom: 1px solid rgba(107,76,42,0.1);
+}
+.sp-avatar {
+width: 10px; height: 10px;
+border-radius: 50%;
+background: var(–brown-light);
+flex-shrink: 0;
+}
+.sp-uname {
+font-size: 7px;
+font-weight: 500;
+color: var(–brown-dark);
+letter-spacing: 0.03em;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+.sp-img {
+width: 100%;
+flex: 1;
+}
+.sp-img-block {
+height: 50px;
+position: relative;
+overflow: hidden;
+}
+.sp-footer {
+padding: 4px 6px;
+display: flex;
+align-items: center;
+gap: 4px;
+}
+.sp-heart { font-size: 8px; color: var(–bronze); }
+.sp-count { font-size: 7px; color: var(–text-muted); }
+
+/* Instagram preview */
+.ig-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+grid-template-rows: 1fr 1fr;
+gap: 1px;
+height: 70px;
+}
+.ig-cell {
+background: var(–taupe);
+position: relative;
+overflow: hidden;
+}
+.ig-cell:nth-child(1) { background: #C4A882; }
+.ig-cell:nth-child(2) { background: #A08060; }
+.ig-cell:nth-child(3) { background: #8B6B47; }
+.ig-cell:nth-child(4) { background: #B09070; }
+.ig-cell .pattern {
+position: absolute; inset: 0;
+opacity: 0.3;
+background-image: repeating-linear-gradient(
+45deg,
+rgba(245,240,232,0.3) 0px, rgba(245,240,232,0.3) 1px,
+transparent 1px, transparent 6px
+);
+}
+
+/* LinkedIn preview */
+.li-content { padding: 5px 6px; }
+.li-post-line {
+height: 2px;
+background: rgba(62,43,22,0.15);
+border-radius: 1px;
+margin-bottom: 3px;
+}
+.li-post-line:last-child { width: 60%; }
+
+/* Behance preview */
+.be-color { height: 70px; background: linear-gradient(135deg, #9C7E5A 0%, #6B4C2A 100%); position: relative; }
+.be-letter {
+position: absolute;
+inset: 0;
+display: flex; align-items: center; justify-content: center;
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 24px;
+font-weight: 600;
+color: rgba(245,240,232,0.4);
+font-style: italic;
+}
+.be-tag {
+position: absolute;
+top: 6px; right: 6px;
+font-size: 6px;
+letter-spacing: 0.1em;
+color: rgba(245,240,232,0.8);
+text-transform: uppercase;
+background: rgba(62,43,22,0.4);
+padding: 2px 5px;
+border-radius: 4px;
+}
+
+.engagement-row {
+display: flex;
+gap: 12px;
+}
+.eng-stat {
+display: flex;
+flex-direction: column;
+gap: 2px;
+}
+.eng-stat .e-val {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 16px;
+font-weight: 500;
+color: var(–brown-dark);
+line-height: 1;
+}
+.eng-stat .e-label {
+font-size: 9px;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(–text-muted);
+}
+
+/* Design card */
+.design-showcase {
+display: flex;
+gap: 10px;
+margin-bottom: 14px;
+align-items: stretch;
+}
+.design-main {
+flex: 1.5;
+background: var(–brown-dark);
+border-radius: 12px;
+padding: 16px;
+position: relative;
+overflow: hidden;
+min-height: 110px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}
+.design-main::before {
+content: ‘’;
+position: absolute;
+bottom: -30px; right: -30px;
+width: 100px; height: 100px;
+border-radius: 50%;
+border: 1px solid rgba(212,197,169,0.15);
+}
+.design-main::after {
+content: ‘’;
+position: absolute;
+bottom: -10px; right: -10px;
+width: 60px; height: 60px;
+border-radius: 50%;
+border: 1px solid rgba(212,197,169,0.1);
+}
+.d-letter {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 52px;
+font-weight: 300;
+color: rgba(212,197,169,0.25);
+line-height: 1;
+position: absolute;
+top: 8px; right: 12px;
+font-style: italic;
+}
+.d-brand-name {
+font-family: ‘Jost’, sans-serif;
+font-size: 8px;
+font-weight: 500;
+letter-spacing: 0.3em;
+text-transform: uppercase;
+color: rgba(212,197,169,0.6);
+position: relative; z-index: 1;
+}
+.d-tagline {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 15px;
+font-weight: 400;
+color: var(–taupe);
+font-style: italic;
+position: relative; z-index: 1;
+}
+.d-divider {
+height: 1px;
+background: rgba(212,197,169,0.2);
+position: relative; z-index: 1;
+}
+.d-sub {
+font-size: 8px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: rgba(212,197,169,0.4);
+position: relative; z-index: 1;
+}
+
+.design-side {
+flex: 1;
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+.design-piece {
+flex: 1;
+border-radius: 10px;
+border: 1px solid var(–card-border);
+background: var(–cream-dark);
+padding: 10px;
+position: relative;
+overflow: hidden;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.dp-1 { background: rgba(155,126,90,0.1); }
+.dp-2 { background: rgba(212,197,169,0.3); }
+.dp-geo {
+width: 30px; height: 30px;
+position: relative;
+}
+.dp-geo span {
+position: absolute;
+inset: 0;
+border: 1.5px solid var(–bronze);
+border-radius: 2px;
+transform: rotate(0deg);
+transition: transform 0.3s;
+}
+.dp-geo span:nth-child(2) {
+border-color: var(–brown-light);
+transform: rotate(20deg) scale(0.75);
+}
+.dp-geo span:nth-child(3) {
+border-color: var(–taupe);
+transform: rotate(40deg) scale(0.5);
+}
+.dp-circle {
+width: 28px; height: 28px;
+border-radius: 50%;
+border: 1.5px solid var(–brown);
+position: relative;
+display: flex; align-items: center; justify-content: center;
+}
+.dp-circle::after {
+content: ‘’;
+width: 14px; height: 14px;
+background: var(–taupe);
+border-radius: 50%;
+}
+
+/* ── FOOTER ── */
+footer {
+position: relative;
+z-index: 1;
+padding: 28px 48px;
+border-top: 1px solid var(–card-border);
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+.footer-copy {
+font-size: 10px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–text-muted);
+}
+.footer-mark {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 13px;
+font-style: italic;
+color: var(–brown-light);
+}
+
+/* Decorative organic blob shape in cards */
+.blob-bg {
+position: absolute;
+bottom: -40px; left: -40px;
+width: 160px; height: 160px;
+border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+background: rgba(212,197,169,0.12);
+pointer-events: none;
+}
+
+/* Numbered section indicator */
+.section-num {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 11px;
+font-weight: 300;
+font-style: italic;
+color: var(–taupe);
+letter-spacing: 0.05em;
+}
+
+/* ── UPLOAD ZONE ── */
+.upload-zone {
+margin-top: 16px;
+border: 1.5px dashed var(–taupe);
+border-radius: 14px;
+padding: 14px 16px;
+text-align: center;
+cursor: pointer;
+transition: border-color 0.2s, background 0.2s;
+background: rgba(212,197,169,0.07);
+position: relative;
+}
+.upload-zone:hover, .upload-zone.drag-over {
+border-color: var(–bronze);
+background: rgba(139,99,64,0.07);
+}
+.upload-zone input[type=“file”] {
+position: absolute; inset: 0;
+opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+.upload-zone-inner {
+display: flex; align-items: center; justify-content: center;
+gap: 8px; pointer-events: none;
+}
+.upload-icon {
+width: 20px; height: 20px; flex-shrink: 0;
+}
+.upload-icon svg { width: 20px; height: 20px; stroke: var(–brown-light); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.upload-label {
+font-family: ‘Jost’, sans-serif;
+font-size: 11px;
+font-weight: 400;
+color: var(–brown-light);
+letter-spacing: 0.06em;
+}
+.upload-label strong {
+color: var(–bronze);
+font-weight: 500;
+}
+.upload-types {
+font-size: 9px;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(–taupe);
+margin-top: 4px;
+}
+
+/* ── PREVIEW GALLERY ── */
+@keyframes fadeSlide {
+from { opacity: 0; transform: translateY(6px); }
+to   { opacity: 1; transform: translateY(0); }
+}
+
+.preview-gallery {
+margin-top: 14px;
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+gap: 8px;
+}
+.preview-gallery.has-files { padding-top: 2px; }
+
+/* Image tile */
+.prev-img-tile {
+position: relative;
+border-radius: 10px;
+overflow: hidden;
+aspect-ratio: 1;
+cursor: zoom-in;
+animation: fadeSlide 0.22s ease;
+border: 1px solid var(–card-border);
+background: var(–cream-dark);
+}
+.prev-img-tile img {
+width: 100%; height: 100%;
+object-fit: cover;
+display: block;
+transition: transform 0.25s;
+}
+.prev-img-tile:hover img { transform: scale(1.06); }
+.prev-img-tile .tile-overlay {
+position: absolute; inset: 0;
+background: rgba(62,43,22,0);
+transition: background 0.2s;
+display: flex; align-items: flex-end;
+}
+.prev-img-tile:hover .tile-overlay { background: rgba(62,43,22,0.35); }
+.tile-name {
+font-size: 8px; font-weight: 500;
+color: rgba(245,240,232,0);
+letter-spacing: 0.04em;
+padding: 5px 6px;
+white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+width: 100%;
+transition: color 0.2s;
+}
+.prev-img-tile:hover .tile-name { color: rgba(245,240,232,0.9); }
+.tile-remove {
+position: absolute; top: 5px; right: 5px;
+width: 18px; height: 18px; border-radius: 50%;
+background: rgba(62,43,22,0.6);
+border: none; cursor: pointer;
+color: rgba(245,240,232,0.9);
+font-size: 12px; line-height: 1;
+display: flex; align-items: center; justify-content: center;
+opacity: 0; transition: opacity 0.18s;
+}
+.prev-img-tile:hover .tile-remove { opacity: 1; }
+
+/* File (non-image) tile */
+.prev-file-tile {
+position: relative;
+border-radius: 10px;
+border: 1px solid var(–card-border);
+background: var(–cream-dark);
+aspect-ratio: 1;
+display: flex; flex-direction: column;
+align-items: center; justify-content: center;
+gap: 5px;
+animation: fadeSlide 0.22s ease;
+cursor: default;
+padding: 8px;
+}
+.prev-file-ext {
+font-family: ‘Jost’, sans-serif;
+font-size: 11px; font-weight: 500;
+letter-spacing: 0.06em;
+color: var(–brown);
+background: rgba(107,76,42,0.12);
+padding: 3px 7px; border-radius: 6px;
+text-transform: uppercase;
+}
+.prev-file-name {
+font-size: 8px; color: var(–text-muted);
+text-align: center;
+word-break: break-all;
+line-height: 1.3;
+display: -webkit-box;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
+overflow: hidden;
+}
+.prev-file-size {
+font-size: 7px; color: var(–taupe);
+letter-spacing: 0.06em;
+}
+.prev-file-tile .tile-remove {
+position: absolute; top: 5px; right: 5px;
+width: 16px; height: 16px; border-radius: 50%;
+background: rgba(62,43,22,0.15);
+border: none; cursor: pointer;
+color: var(–text-muted);
+font-size: 11px; line-height: 1;
+display: flex; align-items: center; justify-content: center;
+transition: background 0.15s;
+}
+.prev-file-tile .tile-remove:hover { background: rgba(62,43,22,0.3); color: var(–brown-dark); }
+
+/* Video tile */
+.prev-video-tile {
+position: relative;
+border-radius: 10px;
+overflow: hidden;
+aspect-ratio: 1;
+animation: fadeSlide 0.22s ease;
+border: 1px solid var(–card-border);
+background: var(–brown-dark);
+}
+.prev-video-tile video {
+width: 100%; height: 100%; object-fit: cover;
+display: block;
+}
+.video-play-badge {
+position: absolute; inset: 0;
+display: flex; align-items: center; justify-content: center;
+pointer-events: none;
+}
+.video-play-badge span {
+width: 28px; height: 28px;
+border-radius: 50%;
+background: rgba(245,240,232,0.85);
+display: flex; align-items: center; justify-content: center;
+font-size: 11px;
+color: var(–brown-dark);
+padding-left: 2px;
+}
+.prev-video-tile .tile-remove {
+position: absolute; top: 5px; right: 5px;
+width: 18px; height: 18px; border-radius: 50%;
+background: rgba(62,43,22,0.6);
+border: none; cursor: pointer;
+color: rgba(245,240,232,0.9);
+font-size: 12px; line-height: 1;
+display: flex; align-items: center; justify-content: center;
+opacity: 0; transition: opacity 0.18s;
+}
+.prev-video-tile:hover .tile-remove { opacity: 1; }
+
+/* Section header above gallery when files exist */
+.gallery-header {
+display: flex; align-items: center; justify-content: space-between;
+margin-top: 14px; margin-bottom: 6px;
+}
+.gallery-header span {
+font-size: 9px; font-weight: 500;
+letter-spacing: 0.14em; text-transform: uppercase;
+color: var(–brown-light);
+}
+.gallery-header button {
+font-size: 9px; background: none; border: none;
+color: var(–taupe); cursor: pointer; letter-spacing: 0.06em;
+padding: 0;
+transition: color 0.15s;
+}
+.gallery-header button:hover { color: var(–brown); }
+
+/* ── LIGHTBOX ── */
+.lightbox {
+display: none;
+position: fixed; inset: 0; z-index: 1000;
+background: rgba(30,18,8,0.88);
+align-items: center; justify-content: center;
+padding: 24px;
+}
+.lightbox.open { display: flex; }
+.lightbox-inner {
+position: relative;
+max-width: 880px; max-height: 90vh;
+display: flex; align-items: center; justify-content: center;
+}
+.lightbox img {
+max-width: 100%; max-height: 88vh;
+border-radius: 14px;
+object-fit: contain;
+box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+}
+.lb-close {
+position: fixed; top: 20px; right: 24px;
+background: rgba(245,240,232,0.15);
+border: 1px solid rgba(245,240,232,0.2);
+color: var(–cream); border-radius: 50%;
+width: 36px; height: 36px;
+cursor: pointer; font-size: 18px;
+display: flex; align-items: center; justify-content: center;
+transition: background 0.15s;
+}
+.lb-close:hover { background: rgba(245,240,232,0.25); }
+.lb-caption {
+position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+font-size: 11px; color: rgba(245,240,232,0.6);
+letter-spacing: 0.08em; white-space: nowrap;
+}
+</style>
+
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+
+<header>
+  <div class="logo-block">
+    <h1>ATITAYA</h1>
+    <span>Professional Portfolio</span>
+  </div>
+
+  <nav>
+    <a href="#" class="active">Home</a>
+    <a href="#">Portfolio</a>
+    <a href="#">About</a>
+    <a href="#">Blog</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <div class="header-social">
+    <!-- LinkedIn -->
+    <a href="#" class="social-btn" aria-label="LinkedIn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+        <rect x="2" y="9" width="4" height="12"/>
+        <circle cx="4" cy="4" r="2"/>
+      </svg>
+    </a>
+    <!-- Instagram -->
+    <a href="#" class="social-btn" aria-label="Instagram">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+      </svg>
+    </a>
+    <!-- Behance -->
+    <a href="#" class="social-btn" aria-label="Behance">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 9h9a3 3 0 0 1 0 6H2V4h8a3 3 0 0 1 0 5"/>
+        <path d="M15 8h7M17 12h5M15 16h7"/>
+      </svg>
+    </a>
+    <!-- Email -->
+    <a href="#" class="social-btn" aria-label="Email">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
+      </svg>
+    </a>
+  </div>
+</header>
+
+<!-- ── HERO ── -->
+
+<section class="hero">
+  <div class="hero-text">
+    <h2>The<br><em>Portfolio.</em></h2>
+    <p class="hero-sub">Creative Direction &nbsp;·&nbsp; Brand Strategy &nbsp;·&nbsp; Communications</p>
+  </div>
+  <div class="hero-actions">
+    <a href="#" class="btn-connect">Connect</a>
+    <span class="tagline">"Design is how it works."</span>
+  </div>
+</section>
+
+<!-- ── SECTION 1: MY WORK & EXPERIENCE ── -->
+
+<div class="section-wrap">
+  <div class="section-label">
+    <span class="section-num">01</span>
+    <h3>My Work &amp; Experience</h3>
+  </div>
+
+  <div class="work-grid">
+
+```
+<!-- Card 1: Key Presentations -->
+<div class="card">
+  <div class="blob-bg"></div>
+  <span class="card-tag">Featured Work</span>
+  <h4>Key Presentations</h4>
+  <p class="card-desc">Pitches, keynotes, and concept decks.</p>
+
+  <!-- Slide miniatures -->
+  <div class="slide-miniatures">
+    <div class="slide-mini">
+      <span class="s-title">Keynote</span>
+      <span class="s-dot"></span>
+      <div class="s-lines"><span></span><span></span><span></span></div>
+      <div class="s-bar" style="background:var(--brown);"></div>
+    </div>
+    <div class="slide-mini">
+      <span class="s-title">Strategy</span>
+      <span class="s-dot" style="background:var(--brown-light);"></span>
+      <div class="s-lines"><span></span><span></span></div>
+      <div class="s-bar" style="background:var(--bronze);height:40%;"></div>
+    </div>
+    <div class="slide-mini">
+      <span class="s-title">Brand</span>
+      <span class="s-dot" style="background:var(--taupe);"></span>
+      <div class="s-lines"><span></span><span></span><span></span></div>
+      <div class="s-bar" style="background:var(--brown-dark);height:25%;"></div>
+    </div>
+  </div>
+
+  <!-- Presentation screen -->
+  <div class="pres-screen">
+    <div class="pres-screen-inner">
+      <div class="pres-logo-e">E</div>
+      <div class="pres-meta">
+        <p>Strategy Deck · 2024</p>
+        <div class="pres-title">Brand Identity & Positioning</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="upload-zone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event,'presentations')">
+    <input type="file" multiple accept=".pdf,.ppt,.pptx,.key,.png,.jpg" onchange="handleFiles(event,'presentations')">
+    <div class="upload-zone-inner">
+      <div class="upload-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+      <div>
+        <div class="upload-label"><strong>อัปโหลดไฟล์งาน</strong> หรือลากมาวาง</div>
+        <div class="upload-types">PDF · PPT · KEY · PNG · JPG</div>
+      </div>
+    </div>
+  </div>
+  <div id="gallery-wrap-presentations">
+```
+
+  <div class="gallery-header" style="display:none">
+    <span>ไฟล์ที่อัปโหลด &nbsp;<span class="g-count">0 ไฟล์</span></span>
+    <button onclick="clearAll('presentations')">ล้างทั้งหมด</button>
+  </div>
+  <div class="preview-gallery"></div>
+</div>
+    </div>
+
+```
+<!-- Card 2: Experience & Accolades -->
+<div class="card">
+  <div class="blob-bg"></div>
+  <span class="card-tag">Track Record</span>
+  <h4>Experience &amp; Accolades</h4>
+  <p class="card-desc">Professional history, degrees, and awards.</p>
+
+  <div class="exp-list">
+    <div class="exp-item">
+      <span class="exp-year">2022</span>
+      <div class="exp-content">
+        <h5>Creative Director</h5>
+        <p>Strategic brand consulting, EMEA region</p>
+      </div>
+      <div class="exp-badge">
+        <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+      </div>
+    </div>
+    <div class="exp-item">
+      <span class="exp-year">2019</span>
+      <div class="exp-content">
+        <h5>Communications Lead</h5>
+        <p>International media & PR campaigns</p>
+      </div>
+      <div class="exp-badge">
+        <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+      </div>
+    </div>
+    <div class="exp-item">
+      <span class="exp-year">2016</span>
+      <div class="exp-content">
+        <h5>Brand Strategist</h5>
+        <p>Start-up ecosystem, growth & identity</p>
+      </div>
+      <div class="exp-badge">
+        <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="diploma-graphic">
+    <div class="diploma-seal">✦</div>
+    <div class="diploma-text">
+      <p>M.A. Communications</p>
+      <span>University of Arts · Distinction Honours</span>
+    </div>
+  </div>
+
+  <div class="upload-zone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event,'experience')">
+    <input type="file" multiple accept=".pdf,.doc,.docx,.png,.jpg" onchange="handleFiles(event,'experience')">
+    <div class="upload-zone-inner">
+      <div class="upload-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+      <div>
+        <div class="upload-label"><strong>อัปโหลดไฟล์งาน</strong> หรือลากมาวาง</div>
+        <div class="upload-types">PDF · DOC · ประกาศนียบัตร · รูปภาพ</div>
+      </div>
+    </div>
+  </div>
+  <div id="gallery-wrap-experience">
+```
+
+  <div class="gallery-header" style="display:none">
+    <span>ไฟล์ที่อัปโหลด &nbsp;<span class="g-count">0 ไฟล์</span></span>
+    <button onclick="clearAll('experience')">ล้างทั้งหมด</button>
+  </div>
+  <div class="preview-gallery"></div>
+</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 2: ACTIVITIES & SCORES ── -->
+
+<div class="section-wrap">
+  <div class="section-label">
+    <span class="section-num">02</span>
+    <h3>Activities &amp; Scores</h3>
+  </div>
+
+  <div class="activity-grid">
+
+```
+<!-- Card: Event Participation -->
+<div class="card">
+  <div class="blob-bg"></div>
+  <span class="card-tag">Live &amp; In-Person</span>
+  <h4>Event Participation</h4>
+  <p class="card-desc">Workshops and conferences.</p>
+
+  <div class="event-img">
+    <div class="event-scene">
+      <div class="bg-rect"></div>
+      <!-- Illustrated people at workshop table -->
+      <div class="table-rect"></div>
+      <div class="person" style="left:12%">
+        <div class="p-head"></div>
+        <div class="p-body" style="background:rgba(62,43,22,0.5);width:18px;"></div>
+      </div>
+      <div class="person" style="left:26%">
+        <div class="p-head" style="width:10px;height:10px;"></div>
+        <div class="p-body" style="background:rgba(245,240,232,0.4);width:14px;height:16px;"></div>
+      </div>
+      <div class="person" style="left:40%; bottom:30px">
+        <div class="p-head" style="width:13px;height:13px;background:rgba(245,240,232,0.6);"></div>
+        <div class="p-body" style="background:rgba(139,107,71,0.7);width:18px;"></div>
+      </div>
+      <div class="person" style="left:55%">
+        <div class="p-head" style="background:rgba(245,240,232,0.5);"></div>
+        <div class="p-body" style="background:rgba(62,43,22,0.45);"></div>
+      </div>
+      <div class="person" style="left:68%">
+        <div class="p-head" style="width:11px;height:11px;"></div>
+        <div class="p-body" style="background:rgba(196,168,130,0.6);width:15px;height:17px;"></div>
+      </div>
+      <div class="person" style="left:80%; bottom:26px">
+        <div class="p-head" style="width:13px;height:13px;background:rgba(245,240,232,0.65);"></div>
+        <div class="p-body" style="background:rgba(107,76,42,0.6);width:18px;height:20px;"></div>
+      </div>
+      <div class="event-label">Workshop · 2024</div>
+      <div class="event-count">14 events</div>
+    </div>
+  </div>
+
+  <div class="upload-zone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event,'events')">
+    <input type="file" multiple accept=".jpg,.jpeg,.png,.pdf,.mp4,.mov" onchange="handleFiles(event,'events')">
+    <div class="upload-zone-inner">
+      <div class="upload-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+      <div>
+        <div class="upload-label"><strong>อัปโหลดไฟล์งาน</strong> หรือลากมาวาง</div>
+        <div class="upload-types">JPG · PNG · PDF · MP4</div>
+      </div>
+    </div>
+  </div>
+  <div id="gallery-wrap-events">
+```
+
+  <div class="gallery-header" style="display:none">
+    <span>ไฟล์ที่อัปโหลด &nbsp;<span class="g-count">0 ไฟล์</span></span>
+    <button onclick="clearAll('events')">ล้างทั้งหมด</button>
+  </div>
+  <div class="preview-gallery"></div>
+</div>
+    </div>
+
+```
+<!-- Card: Skills & Scores -->
+<div class="card">
+  <div class="blob-bg"></div>
+  <span class="card-tag">Verified Aptitudes</span>
+  <h4>Skills &amp; Scores</h4>
+  <p class="card-desc">Verified aptitudes and test results.</p>
+
+  <div class="skill-bars">
+    <div class="skill-row">
+      <span class="skill-name">Brand Strategy</span>
+      <div class="skill-track"><div class="skill-fill" style="width:94%"></div></div>
+      <span class="skill-pct">94%</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-name">Communications</span>
+      <div class="skill-track"><div class="skill-fill" style="width:91%"></div></div>
+      <span class="skill-pct">91%</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-name">Visual Design</span>
+      <div class="skill-track"><div class="skill-fill" style="width:88%"></div></div>
+      <span class="skill-pct">88%</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-name">Copywriting</span>
+      <div class="skill-track"><div class="skill-fill" style="width:85%"></div></div>
+      <span class="skill-pct">85%</span>
+    </div>
+  </div>
+  <div class="badges">
+    <span class="badge">Google Certified</span>
+    <span class="badge">HubSpot Pro</span>
+    <span class="badge">Adobe CC</span>
+    <span class="badge">IELTS 8.5</span>
+  </div>
+
+  <div class="upload-zone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event,'skills')">
+    <input type="file" multiple accept=".pdf,.png,.jpg,.jpeg" onchange="handleFiles(event,'skills')">
+    <div class="upload-zone-inner">
+      <div class="upload-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+      <div>
+        <div class="upload-label"><strong>อัปโหลดไฟล์งาน</strong> หรือลากมาวาง</div>
+        <div class="upload-types">ใบรับรอง · PDF · PNG · JPG</div>
+      </div>
+    </div>
+  </div>
+  <div id="gallery-wrap-skills">
+```
+
+  <div class="gallery-header" style="display:none">
+    <span>ไฟล์ที่อัปโหลด &nbsp;<span class="g-count">0 ไฟล์</span></span>
+    <button onclick="clearAll('skills')">ล้างทั้งหมด</button>
+  </div>
+  <div class="preview-gallery"></div>
+</div>
+    </div>
+
+```
+<!-- Card: Social Media Engagement -->
+<div class="card">
+  <div class="blob-bg"></div>
+  <span class="card-tag">Online Community</span>
+  <h4>Social Media Engagement</h4>
+  <p class="card-desc">Online community highlights.</p>
+
+  <div class="social-previews">
+    <!-- Instagram -->
+    <div class="social-preview">
+      <div class="sp-header">
+        <div class="sp-avatar" style="background: linear-gradient(135deg,#C4A882,#6B4C2A);"></div>
+        <span class="sp-uname">@slavicaZB</span>
+      </div>
+      <div class="ig-grid">
+        <div class="ig-cell"><div class="pattern"></div></div>
+        <div class="ig-cell"><div class="pattern"></div></div>
+        <div class="ig-cell"><div class="pattern"></div></div>
+        <div class="ig-cell"><div class="pattern"></div></div>
+      </div>
+      <div class="sp-footer">
+        <span class="sp-heart">♥</span>
+        <span class="sp-count">2.4k</span>
+      </div>
+    </div>
+    <!-- LinkedIn -->
+    <div class="social-preview">
+      <div class="sp-header">
+        <div class="sp-avatar" style="background: #0A66C2; opacity:0.7;"></div>
+        <span class="sp-uname">LinkedIn</span>
+      </div>
+      <div style="padding: 6px; flex:1;">
+        <div class="li-content">
+          <div class="li-post-line" style="margin-bottom:3px; height:2px; background:rgba(62,43,22,0.2); border-radius:1px;"></div>
+          <div class="li-post-line" style="height:2px; background:rgba(62,43,22,0.15); border-radius:1px; width:85%;"></div>
+          <div class="li-post-line" style="height:2px; margin-top:3px; background:rgba(62,43,22,0.1); border-radius:1px; width:60%;"></div>
+        </div>
+        <div style="margin-top:6px; height:30px; background:var(--cream-dark); border-radius:4px;"></div>
+      </div>
+      <div class="sp-footer">
+        <span class="sp-heart">▲</span>
+        <span class="sp-count">847</span>
+      </div>
+    </div>
+    <!-- Behance -->
+    <div class="social-preview">
+      <div class="sp-header">
+        <div class="sp-avatar" style="background: #1769FF; opacity:0.7;"></div>
+        <span class="sp-uname">Behance</span>
+      </div>
+      <div class="be-color">
+        <div class="be-letter">E</div>
+        <span class="be-tag">Project</span>
+      </div>
+      <div class="sp-footer">
+        <span class="sp-heart">◈</span>
+        <span class="sp-count">1.1k</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="engagement-row">
+    <div class="eng-stat">
+      <span class="e-val">12.4k</span>
+      <span class="e-label">Followers</span>
+    </div>
+    <div class="eng-stat">
+      <span class="e-val">4.8%</span>
+      <span class="e-label">Avg. Engagement</span>
+    </div>
+    <div class="eng-stat">
+      <span class="e-val">340+</span>
+      <span class="e-label">Posts</span>
+    </div>
+  </div>
+
+  <div class="upload-zone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event,'social')">
+    <input type="file" multiple accept=".jpg,.jpeg,.png,.mp4,.pdf" onchange="handleFiles(event,'social')">
+    <div class="upload-zone-inner">
+      <div class="upload-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+      <div>
+        <div class="upload-label"><strong>อัปโหลดไฟล์งาน</strong> หรือลากมาวาง</div>
+        <div class="upload-types">โพสต์ · สกรีนช็อต · รูปภาพ · วิดีโอ</div>
+      </div>
+    </div>
+  </div>
+  <div id="gallery-wrap-social">
+```
+
+  <div class="gallery-header" style="display:none">
+    <span>ไฟล์ที่อัปโหลด &nbsp;<span class="g-count">0 ไฟล์</span></span>
+    <button onclick="clearAll('social')">ล้างทั้งหมด</button>
+  </div>
+  <div class="preview-gallery"></div>
+</div>
+    </div>
+
+```
+<!-- Card: Design Concepts -->
+<div class="card">
+  <div class="blob-bg"></div>
+  <span class="card-tag">Visual Identity</span>
+  <h4>Design Concepts</h4>
+  <p class="card-desc">Visual identity and branding.</p>
+
+  <div class="design-showcase">
+    <!-- Main dark card with E logo -->
+    <div class="design-main">
+      <div class="d-letter">E</div>
+      <span class="d-brand-name">ATITAYA · Studio</span>
+      <div style="height:8px;"></div>
+      <span class="d-tagline">Craft &amp; Clarity</span>
+      <div class="d-divider" style="margin:8px 0;"></div>
+      <span class="d-sub">Brand Identity · 2024</span>
+    </div>
+    <!-- Side pieces -->
+    <div class="design-side">
+      <div class="design-piece dp-1">
+        <div class="dp-geo">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="design-piece dp-2">
+        <div class="dp-circle"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="upload-zone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event,'design')">
+    <input type="file" multiple accept=".jpg,.jpeg,.png,.pdf,.ai,.svg,.fig" onchange="handleFiles(event,'design')">
+    <div class="upload-zone-inner">
+      <div class="upload-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+      <div>
+        <div class="upload-label"><strong>อัปโหลดไฟล์งาน</strong> หรือลากมาวาง</div>
+        <div class="upload-types">PNG · JPG · PDF · SVG · AI · FIG</div>
+      </div>
+    </div>
+  </div>
+  <div id="gallery-wrap-design">
+```
+
+  <div class="gallery-header" style="display:none">
+    <span>ไฟล์ที่อัปโหลด &nbsp;<span class="g-count">0 ไฟล์</span></span>
+    <button onclick="clearAll('design')">ล้างทั้งหมด</button>
+  </div>
+  <div class="preview-gallery"></div>
+</div>
+    </div>
+
+  </div><!-- /activity-grid -->
+</div>
+
+<!-- ── FOOTER ── -->
+
+<footer>
+  <span class="footer-copy">© 2024 ATITAYA</span>
+  <span class="footer-mark">All works reserved.</span>
+</footer>
+
+<!-- Lightbox -->
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-inner">
+    <img id="lb-img" src="" alt="">
+  </div>
+  <button class="lb-close" onclick="closeLightbox()">×</button>
+  <div class="lb-caption" id="lb-caption"></div>
+</div>
+
+<script>
+/* ── helpers ── */
+function fmt(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1048576) return (bytes/1024).toFixed(1) + ' KB';
+  return (bytes/1048576).toFixed(1) + ' MB';
+}
+function ext(name) { return name.split('.').pop().toUpperCase().slice(0,5); }
+function isImg(f)  { return f.type.startsWith('image/'); }
+function isVid(f)  { return f.type.startsWith('video/'); }
+
+/* ── store ── */
+const store = {};
+
+/* ── drag/drop ── */
+function handleDragOver(e)  { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+function handleDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+function handleDrop(e, s)   { e.preventDefault(); e.currentTarget.classList.remove('drag-over'); addFiles(Array.from(e.dataTransfer.files), s); }
+function handleFiles(e, s)  { addFiles(Array.from(e.target.files), s); e.target.value=''; }
+
+/* ── add files ── */
+function addFiles(files, s) {
+  if (!store[s]) store[s] = [];
+  files.forEach(f => {
+    const id = '_' + Date.now() + Math.random().toString(36).slice(2);
+    store[s].push({id, f});
+    renderTile({id, f}, s);
+  });
+  refreshHeader(s);
+}
+
+/* ── gallery header ── */
+function refreshHeader(s) {
+  const wrap = document.getElementById('gallery-wrap-' + s);
+  if (!wrap) return;
+  const hdr = wrap.querySelector('.gallery-header');
+  const grid = wrap.querySelector('.preview-gallery');
+  const count = store[s] ? store[s].length : 0;
+  if (count > 0) {
+    if (!hdr.dataset.ready) {
+      hdr.style.display = 'flex';
+      hdr.dataset.ready = '1';
+    }
+    hdr.querySelector('.g-count').textContent = count + ' ไฟล์';
+  } else {
+    hdr.style.display = 'none';
+    delete hdr.dataset.ready;
+  }
+}
+
+/* ── render tile ── */
+function renderTile(entry, s) {
+  const grid = document.querySelector('#gallery-wrap-' + s + ' .preview-gallery');
+
+  if (isImg(entry.f)) {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const tile = document.createElement('div');
+      tile.className = 'prev-img-tile';
+      tile.id = 'tile-' + entry.id;
+      tile.innerHTML = `
+        <img src="${ev.target.result}" alt="${entry.f.name}" loading="lazy">
+        <div class="tile-overlay"><div class="tile-name">${entry.f.name}</div></div>
+        <button class="tile-remove" onclick="event.stopPropagation();removeTile('${entry.id}','${s}')">×</button>`;
+      tile.addEventListener('click', () => openLightbox(ev.target.result, entry.f.name));
+      grid.appendChild(tile);
+    };
+    reader.readAsDataURL(entry.f);
+
+  } else if (isVid(entry.f)) {
+    const url = URL.createObjectURL(entry.f);
+    const tile = document.createElement('div');
+    tile.className = 'prev-video-tile';
+    tile.id = 'tile-' + entry.id;
+    tile.innerHTML = `
+      <video src="${url}" muted playsinline preload="metadata"></video>
+      <div class="video-play-badge"><span>▶</span></div>
+      <button class="tile-remove" onclick="event.stopPropagation();removeTile('${entry.id}','${s}')">×</button>`;
+    tile.querySelector('video').addEventListener('click', function(e) {
+      e.stopPropagation();
+      this.paused ? this.play() : this.pause();
+      tile.querySelector('.video-play-badge').style.opacity = this.paused ? '1' : '0';
+    });
+    grid.appendChild(tile);
+
+  } else {
+    const tile = document.createElement('div');
+    tile.className = 'prev-file-tile';
+    tile.id = 'tile-' + entry.id;
+    tile.innerHTML = `
+      <div class="prev-file-ext">${ext(entry.f.name)}</div>
+      <div class="prev-file-name">${entry.f.name}</div>
+      <div class="prev-file-size">${fmt(entry.f.size)}</div>
+      <button class="tile-remove" onclick="removeTile('${entry.id}','${s}')">×</button>`;
+    grid.appendChild(tile);
+  }
+}
+
+/* ── remove ── */
+function removeTile(id, s) {
+  store[s] = (store[s]||[]).filter(e => e.id !== id);
+  const el = document.getElementById('tile-' + id);
+  if (el) { el.style.opacity='0'; el.style.transform='scale(0.85)'; el.style.transition='all 0.18s'; setTimeout(()=>el.remove(), 180); }
+  setTimeout(()=>refreshHeader(s), 200);
+}
+
+function clearAll(s) {
+  (store[s]||[]).forEach(e => { const el = document.getElementById('tile-'+e.id); if(el) el.remove(); });
+  store[s] = [];
+  refreshHeader(s);
+}
+
+/* ── lightbox ── */
+function openLightbox(src, name) {
+  document.getElementById('lb-img').src = src;
+  document.getElementById('lb-caption').textContent = name;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(e) {
+  if (e && e.target !== e.currentTarget && !e.target.classList.contains('lb-close')) return;
+  document.getElementById('lightbox').classList.remove('open');
+  document.getElementById('lb-img').src = '';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
+</script>
+
+</body>
+</html>
