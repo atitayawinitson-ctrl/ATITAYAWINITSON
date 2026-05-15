@@ -1,159 +1,1024 @@
-import os
-
-# ข้อมูลโค้ด HTML/CSS/JS ที่ปรับปรุงแล้ว
-html_content = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATITAYA | Professional Portfolio</title>
-    <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        /* CSS เดิมของคุณ */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-            --cream: #FDFBF7; --cream-dark: #F5F0E6; --taupe: #D8C3A5;
-            --brown-light: #B09572; --brown: #634B30; --brown-dark: #2D1F10;
-            --bronze: #A67C52; --text-main: #2D1F10; --text-muted: #8C7661;
-            --card-bg: #FFFFFF; --card-border: rgba(182, 161, 131, 0.15);
-        }
-        body { background: var(--cream); font-family: 'Jost', sans-serif; color: var(--text-main); }
-        
-        /* สไตล์สำหรับการ์ดและการแบ่ง Grid */
-        .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 28px; position: relative; transition: all 0.3s ease; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .card-tag { display: inline-block; font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--brown-light); margin-bottom: 10px; }
-        
-        /* UI ใหม่: Preview Modal */
-        .preview-modal {
-            display: none; position: fixed; inset: 0; z-index: 2000;
-            background: rgba(45, 31, 16, 0.85); backdrop-filter: blur(8px);
-            align-items: center; justify-content: center; padding: 20px;
-        }
-        .preview-modal.active { display: flex; }
-        .modal-content {
-            background: var(--cream); width: 100%; max-width: 800px; border-radius: 24px;
-            padding: 40px; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-        }
-        .close-modal { position: absolute; top: 20px; right: 25px; cursor: pointer; font-size: 24px; color: var(--brown); }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATITAYA | Professional Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* Tabs Layout */
-        .tabs-nav { display: flex; gap: 20px; border-bottom: 1px solid var(--taupe); margin-bottom: 30px; }
-        .tab-btn { 
-            padding: 10px 20px; cursor: pointer; font-family: 'Jost'; font-weight: 500; 
-            text-transform: uppercase; font-size: 11px; letter-spacing: 2px;
-            color: var(--text-muted); border-bottom: 2px solid transparent; transition: 0.3s;
-        }
-        .tab-btn.active { color: var(--brown); border-color: var(--brown); }
-        .tab-pane { display: none; }
-        .tab-pane.active { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+:root {
+  --cream: #FDFBF7;        
+  --cream-dark: #F5F0E6;  
+  --taupe: #D8C3A5;        
+  --brown-light: #B09572;  
+  --brown: #634B30;       
+  --brown-dark: #2D1F10;   
+  --bronze: #A67C52;       
+  --text-main: #2D1F10;
+  --text-muted: #8C7661;
+  --card-bg: #FFFFFF;      
+  --card-border: rgba(182, 161, 131, 0.15); 
+}
 
-        /* Grid Cards ใน Modal */
-        .cert-card {
-            background: white; border-radius: 12px; overflow: hidden; border: 1px solid var(--card-border);
-            text-decoration: none; color: inherit; transition: 0.3s; position: relative;
-        }
-        .cert-card:hover { transform: scale(1.02); border-color: var(--bronze); }
-        .cert-thumb { width: 100%; aspect-ratio: 4/3; background: var(--cream-dark); display: flex; align-items: center; justify-content: center; }
-        .cert-info { padding: 15px; }
-        .cert-info h5 { font-family: 'Cormorant Garamond'; font-size: 16px; margin-bottom: 5px; }
-        .cert-type-tag { font-size: 8px; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; }
-        .tag-conference { background: var(--brown-dark); color: white; }
-        .tag-workshop { background: var(--taupe); color: var(--brown-dark); }
+body {
+  background: var(--cream);
+  font-family: 'Jost', sans-serif;
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(212,197,169,0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 90% 80%, rgba(155,126,90,0.1) 0%, transparent 50%);
+  pointer-events: none; z-index: 0;
+}
 
-        /* ปุ่มเดิมที่ต้องการแก้ Action */
-        .btn-view-cert {
-            display: inline-block; margin-top: 15px; padding: 10px 25px;
-            border: 1.5px solid var(--brown); border-radius: 40px;
-            color: var(--brown); text-decoration: none; font-size: 10px;
-            letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
-        }
-    </style>
+/* ── PAGE SYSTEM ── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ── HEADER ── */
+header {
+  position: relative; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 52px;
+  background: var(--cream);
+  border-bottom: 1px solid var(--card-border);
+}
+.logo-block h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600; font-size: 18px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--brown-dark); line-height: 1.2;
+}
+.logo-block span {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300; font-size: 9px;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--brown-light); display: block; margin-top: 3px;
+}
+nav { display: flex; gap: 34px; align-items: center; }
+nav a {
+  font-family: 'Jost', sans-serif;
+  font-size: 10.5px; font-weight: 500;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  text-decoration: none; color: var(--text-main);
+  transition: color 0.2s; position: relative; cursor: pointer;
+}
+nav a::after {
+  content: ''; position: absolute;
+  bottom: -3px; left: 0; right: 0; height: 1px;
+  background: var(--brown); transform: scaleX(0);
+  transition: transform 0.25s;
+}
+nav a:hover::after, nav a.active::after { transform: scaleX(1); }
+nav a:hover, nav a.active { color: var(--brown); }
+.header-social { display: flex; gap: 10px; align-items: center; }
+.social-btn {
+  width: 31px; height: 31px; border-radius: 50%;
+  border: 1.5px solid var(--brown-light);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--brown-light); text-decoration: none;
+  transition: all 0.2s; background: transparent;
+}
+.social-btn:hover { background: var(--brown); border-color: var(--brown); color: var(--cream); transform: scale(1.08); }
+
+/* ─────────────────────────────────────────
+   HOME PAGE
+───────────────────────────────────────── */
+.hero {
+  position: relative; z-index: 1;
+  padding: 60px 52px 48px;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 32px;
+}
+.hero-text h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 76px; font-weight: 300;
+  color: var(--brown-dark); line-height: 0.92;
+  letter-spacing: -0.01em;
+}
+.hero-text h2 em { font-style: italic; color: var(--bronze); }
+.hero-sub {
+  margin-top: 18px; font-size: 11px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--brown-light); font-weight: 400;
+}
+.hero-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 16px; }
+.btn-connect {
+  display: inline-block; padding: 12px 34px;
+  border: 1.5px solid var(--brown); color: var(--brown-dark);
+  font-family: 'Jost', sans-serif; font-size: 10.5px; font-weight: 500;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  text-decoration: none; border-radius: 40px;
+  transition: all 0.25s; background: transparent; cursor: pointer;
+}
+.btn-connect:hover { background: var(--brown); color: var(--cream); }
+.tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px; font-style: italic;
+  color: var(--text-muted); letter-spacing: 0.04em;
+}
+
+/* ── CANVA SLIDE PREVIEW STRIP ── */
+.slides-section {
+  position: relative; z-index: 1;
+  padding: 0 52px 56px;
+}
+.slides-section-label {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 28px;
+}
+.slides-section-label h3 {
+  font-family: 'Jost', sans-serif; font-size: 9.5px; font-weight: 500;
+  letter-spacing: 0.32em; text-transform: uppercase; color: var(--brown-light);
+  white-space: nowrap;
+}
+.slides-section-label::before {
+  content: ''; width: 32px; height: 1px; background: var(--card-border);
+}
+.slides-section-label::after {
+  content: ''; flex: 1; height: 1px; background: var(--card-border);
+}
+.slides-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px; font-weight: 300; font-style: italic;
+  color: var(--taupe); letter-spacing: 0.05em;
+}
+
+/* Slide strip */
+.slide-strip {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+/* Individual slide card */
+.slide-card {
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  transition: transform 0.28s, box-shadow 0.28s;
+  cursor: pointer;
+}
+.slide-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(62,43,22,0.12);
+}
+
+/* LEFT accent pill on every card */
+.slide-card::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 0;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 52%;
+  background: linear-gradient(180deg, var(--bronze) 0%, var(--brown-light) 100%);
+  border-radius: 0 8px 8px 0;
+  z-index: 2;
+}
+
+.slide-cover {
+  width: 100%;
+  aspect-ratio: 16/9;
+  position: relative;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Cover designs per slide */
+.sc-1 { background: linear-gradient(140deg, #2C1A0E 0%, #5A3820 50%, #8B6340 100%); }
+.sc-2 { background: linear-gradient(160deg, #3E2B16 0%, #9C7E5A 100%); }
+.sc-3 { background: linear-gradient(150deg, #6B4C2A 0%, #C4A882 100%); }
+.sc-4 { background: linear-gradient(135deg, #EDE5D4 0%, #9C7E5A 100%); }
+
+.cover-content {
+  position: relative; z-index: 1;
+  padding: 18px 22px;
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+.cover-tag {
+  font-family: 'Jost', sans-serif;
+  font-size: 7px; font-weight: 500; letter-spacing: 0.25em;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.cover-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600; line-height: 1.15;
+}
+.cover-sub {
+  font-family: 'Jost', sans-serif;
+  font-size: 8px; font-weight: 300;
+  letter-spacing: 0.12em; margin-top: 5px; opacity: 0.7;
+}
+.cover-deco {
+  position: absolute;
+  top: 12px; right: 14px;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300; font-style: italic;
+  opacity: 0.14; line-height: 1;
+}
+
+/* Slide 1 (large hero) */
+.sc-1 .cover-tag { color: var(--taupe); }
+.sc-1 .cover-title { font-size: 22px; color: var(--cream); }
+.sc-1 .cover-sub { color: var(--taupe); }
+.sc-1 .cover-deco { font-size: 80px; color: var(--cream); top: -8px; right: 10px; }
+.sc-1 .cover-line {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--bronze), transparent);
+}
+
+/* Slide 2 */
+.sc-2 .cover-tag { color: rgba(245,240,232,0.6); }
+.sc-2 .cover-title { font-size: 15px; color: var(--cream); }
+.sc-2 .cover-sub { color: rgba(245,240,232,0.65); }
+.sc-2 .cover-deco { font-size: 52px; color: var(--cream); }
+
+/* Slide 3 */
+.sc-3 .cover-tag { color: rgba(62,43,22,0.7); }
+.sc-3 .cover-title { font-size: 15px; color: var(--brown-dark); }
+.sc-3 .cover-sub { color: rgba(62,43,22,0.65); }
+.sc-3 .cover-deco { font-size: 52px; color: var(--brown-dark); }
+
+/* Slide 4 */
+.sc-4 .cover-tag { color: rgba(62,43,22,0.6); }
+.sc-4 .cover-title { font-size: 15px; color: var(--brown-dark); }
+.sc-4 .cover-sub { color: rgba(62,43,22,0.55); }
+.sc-4 .cover-deco { font-size: 52px; color: var(--brown-dark); }
+
+.slide-footer {
+  padding: 12px 16px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.sf-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px; font-weight: 600;
+  color: var(--brown-dark); letter-spacing: 0.01em;
+}
+.sf-year {
+  font-family: 'Jost', sans-serif;
+  font-size: 9px; font-weight: 400; letter-spacing: 0.12em;
+  color: var(--brown-light);
+}
+.sf-arrow {
+  font-size: 11px; color: var(--bronze); opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.slide-card:hover .sf-arrow { opacity: 1; }
+
+  .blob-bg {
+  display: none;
+}
+  
+/* CTA strip */
+.cta-strip {
+  position: relative; z-index: 1;
+  padding: 0 52px 60px;
+  display: flex; align-items: center; gap: 24px;
+}
+.cta-line { flex: 1; height: 1px; background: var(--card-border); }
+.btn-view-all {
+  padding: 11px 30px;
+  border: 1.5px solid var(--brown);
+  color: var(--brown-dark); background: transparent;
+  font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 500;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  border-radius: 40px; cursor: pointer; transition: all 0.25s;
+  white-space: nowrap;
+}
+.btn-view-all:hover { background: var(--brown); color: var(--cream); }
+
+/* ─────────────────────────────────────────
+   PORTFOLIO PAGE
+───────────────────────────────────────── */
+.portfolio-wrap {
+  position: relative; z-index: 1;
+  padding: 48px 52px 60px;
+}
+.port-header {
+  margin-bottom: 36px;
+  display: flex; align-items: flex-end; justify-content: space-between;
+}
+.port-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px; font-weight: 300;
+  color: var(--brown-dark); line-height: 1;
+}
+.port-header h2 em { font-style: italic; color: var(--bronze); }
+.port-header p {
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--brown-light); font-weight: 400;
+}
+
+/* Section label */
+.section-label {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 22px;
+}
+.section-label h3 {
+  font-family: 'Jost', sans-serif; font-size: 9.5px; font-weight: 500;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--brown-light);
+  white-space: nowrap;
+}
+.section-label::before { content: ''; width: 32px; height: 1px; background: var(--card-border); }
+.section-label::after  { content: ''; flex: 1; height: 1px; background: var(--card-border); }
+.section-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px; font-weight: 300; font-style: italic;
+  color: var(--taupe);
+}
+.section-block { margin-bottom: 44px; }
+
+/* ── PORTFOLIO CARDS ── */
+.work-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  margin-bottom: 44px;
+}
+.activity-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+}
+
+/* Card base */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 28px 28px 28px 36px; /* extra left padding for accent */
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 44px rgba(62,43,22,0.1);
+}
+
+/* LEFT rounded accent pill */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 0;
+  transform: translateY(-50%);
+  width: 5px; height: 50%;
+  background: linear-gradient(180deg, var(--bronze) 0%, var(--brown-light) 100%);
+  border-radius: 0 8px 8px 0;
+  z-index: 2;
+}
+
+
+.blob-bg {
+  position: absolute; bottom: -40px; left: -40px;
+  width: 150px; height: 150px;
+  border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+  background: rgba(212,197,169,0.1);
+  pointer-events: none;
+}
+.card-tag {
+  display: inline-block; font-size: 8.5px; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--brown-light); background: rgba(107,76,42,0.08);
+  padding: 3px 10px; border-radius: 20px; margin-bottom: 10px;
+}
+.card h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 21px; font-weight: 600; color: var(--brown-dark);
+  margin-bottom: 5px; line-height: 1.2;
+}
+.card .card-desc {
+  font-size: 11.5px; color: var(--text-muted);
+  letter-spacing: 0.02em; margin-bottom: 18px; font-style: italic;
+}
+
+/* ── PRESENTATION CARD ── */
+.slide-miniatures {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-bottom: 12px;
+}
+.slide-mini {
+  border-radius: 7px; border: 1px solid var(--card-border);
+  aspect-ratio: 16/9; overflow: hidden; position: relative; background: var(--cream-dark);
+}
+.slide-mini .s-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 30%; opacity: 0.9; }
+.slide-mini .s-title {
+  position: absolute; top: 7px; left: 6px;
+  font-family: 'Cormorant Garamond', serif; font-size: 6.5px; font-weight: 600; color: var(--brown-dark);
+}
+.slide-mini .s-dot {
+  position: absolute; top: 7px; right: 5px; width: 4px; height: 4px; border-radius: 50%;
+}
+.slide-mini .s-lines { position: absolute; top: 16px; left: 6px; right: 6px; }
+.slide-mini .s-lines span {
+  display: block; height: 1.5px; background: rgba(62,43,22,0.22);
+  margin-bottom: 2px; border-radius: 2px;
+}
+.slide-mini .s-lines span:nth-child(2) { width: 70%; }
+.slide-mini .s-lines span:nth-child(3) { width: 50%; }
+.pres-screen {
+  background: var(--cream-dark); border-radius: 10px;
+  padding: 12px; border: 1px solid var(--card-border);
+}
+.pres-screen-inner {
+  background: var(--brown-dark); border-radius: 6px;
+  padding: 11px 14px; display: flex; align-items: center; gap: 12px;
+}
+.pres-logo-e {
+  font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600;
+  color: var(--taupe); line-height: 1;
+}
+.pres-meta { flex: 1; }
+.pres-meta p {
+  font-size: 7.5px; color: var(--taupe); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 3px;
+}
+.pres-meta .pres-title {
+  font-family: 'Cormorant Garamond', serif; font-size: 12px;
+  font-weight: 500; color: var(--cream);
+}
+
+/* ── EXPERIENCE CARD ── */
+.exp-list { margin-bottom: 14px; }
+.exp-item {
+  display: flex; gap: 12px; padding: 9px 0;
+  border-bottom: 1px solid rgba(107,76,42,0.09); align-items: flex-start;
+}
+.exp-item:last-child { border-bottom: none; }
+.exp-year {
+  font-family: 'Cormorant Garamond', serif; font-size: 12px;
+  font-weight: 500; color: var(--brown-light); min-width: 34px; padding-top: 1px;
+}
+.exp-content h5 { font-size: 12.5px; font-weight: 500; color: var(--brown-dark); margin-bottom: 2px; }
+.exp-content p  { font-size: 10.5px; color: var(--text-muted); font-style: italic; }
+.exp-badge {
+  margin-left: auto; width: 20px; height: 20px; border-radius: 50%;
+  border: 1px solid var(--bronze); display: flex; align-items: center;
+  justify-content: center; flex-shrink: 0;
+}
+.exp-badge svg { width: 10px; height: 10px; fill: none; stroke: var(--bronze); stroke-width: 2; }
+.diploma-graphic {
+  background: linear-gradient(135deg, var(--cream-dark) 0%, var(--taupe) 100%);
+  border-radius: 10px; padding: 12px 16px;
+  border: 1px solid rgba(107,76,42,0.22);
+  display: flex; align-items: center; gap: 12px;
+  position: relative; overflow: hidden;
+}
+.diploma-seal {
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 2px solid var(--brown);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 600; color: var(--brown-dark);
+}
+.diploma-text p {
+  font-family: 'Cormorant Garamond', serif; font-size: 11.5px; font-weight: 600;
+  color: var(--brown-dark); text-transform: uppercase; letter-spacing: 0.07em;
+}
+.diploma-text span { font-size: 9.5px; color: var(--text-muted); font-style: italic; }
+
+/* ── EVENT CARD ── */
+.event-img {
+  width: 100%; height: 116px; border-radius: 12px; overflow: hidden;
+  margin-bottom: 12px; position: relative; background: var(--cream-dark);
+}
+.event-scene { width: 100%; height: 100%; position: relative; overflow: hidden; }
+.event-scene .bg-rect {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, #C4A882 0%, #8B6B47 100%);
+}
+.event-scene .table-rect {
+  position: absolute; bottom: 22px; left: 10%; right: 10%;
+  height: 8px; background: rgba(62,43,22,0.4); border-radius: 4px;
+}
+.person { position: absolute; bottom: 28px; display: flex; flex-direction: column; align-items: center; gap: 1px; }
+.p-head { width: 12px; height: 12px; border-radius: 50%; background: rgba(245,240,232,0.75); }
+.p-body { width: 16px; height: 18px; border-radius: 3px 3px 0 0; }
+.event-label {
+  position: absolute; top: 8px; left: 10px;
+  font-size: 7.5px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(245,240,232,0.85); background: rgba(62,43,22,0.4);
+  padding: 3px 7px; border-radius: 10px;
+}
+.event-count {
+  position: absolute; bottom: 8px; right: 10px;
+  font-family: 'Cormorant Garamond', serif; font-size: 11px;
+  color: rgba(245,240,232,0.9); font-style: italic;
+}
+
+/* ── SKILLS CARD ── */
+.skill-bars { margin-bottom: 12px; }
+.skill-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+.skill-name { font-size: 10px; font-weight: 500; letter-spacing: 0.04em; color: var(--text-main); min-width: 82px; }
+.skill-track { flex: 1; height: 5px; background: rgba(107,76,42,0.11); border-radius: 3px; overflow: hidden; }
+.skill-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--brown-light), var(--bronze)); }
+.skill-pct { font-family: 'Cormorant Garamond', serif; font-size: 12px; font-weight: 500; color: var(--bronze); min-width: 30px; text-align: right; }
+.badges { display: flex; gap: 5px; flex-wrap: wrap; }
+.badge {
+  font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--brown-dark); background: rgba(107,76,42,0.09);
+  border: 1px solid var(--card-border); padding: 3px 8px;
+  border-radius: 20px; display: flex; align-items: center; gap: 4px;
+}
+.badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--bronze); flex-shrink: 0; }
+
+/* ── SOCIAL CARD ── */
+.social-previews { display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; margin-bottom: 12px; }
+.social-preview {
+  border-radius: 9px; border: 1px solid var(--card-border);
+  overflow: hidden; aspect-ratio: 4/5; background: var(--cream-dark);
+}
+.sp-header { padding: 4px 5px; display: flex; align-items: center; gap: 4px; border-bottom: 1px solid rgba(107,76,42,0.1); }
+.sp-avatar { width: 9px; height: 9px; border-radius: 50%; background: var(--brown-light); flex-shrink: 0; }
+.sp-uname { font-size: 6.5px; font-weight: 500; color: var(--brown-dark); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sp-footer { padding: 3px 5px; display: flex; align-items: center; gap: 3px; }
+.sp-heart { font-size: 7px; color: var(--bronze); }
+.sp-count { font-size: 6.5px; color: var(--text-muted); }
+.ig-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1px; height: 64px; }
+.ig-cell { position: relative; overflow: hidden; }
+.ig-cell:nth-child(1){background:#C4A882} .ig-cell:nth-child(2){background:#A08060}
+.ig-cell:nth-child(3){background:#8B6B47} .ig-cell:nth-child(4){background:#B09070}
+.ig-cell .pattern { position: absolute; inset: 0; opacity: 0.28; background-image: repeating-linear-gradient(45deg,rgba(245,240,232,0.3) 0px,rgba(245,240,232,0.3) 1px,transparent 1px,transparent 6px); }
+.be-color { height: 64px; background: linear-gradient(135deg,#9C7E5A 0%,#6B4C2A 100%); position: relative; }
+.be-letter { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond',serif; font-size: 22px; font-weight: 600; color: rgba(245,240,232,0.4); font-style: italic; }
+.be-tag { position: absolute; top: 5px; right: 5px; font-size: 5.5px; letter-spacing: 0.1em; color: rgba(245,240,232,0.8); text-transform: uppercase; background: rgba(62,43,22,0.4); padding: 2px 4px; border-radius: 3px; }
+.engagement-row { display: flex; gap: 14px; }
+.eng-stat { display: flex; flex-direction: column; gap: 2px; }
+.e-val { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 500; color: var(--brown-dark); line-height: 1; }
+.e-label { font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+
+/* ── DESIGN CARD ── */
+.design-showcase { display: flex; gap: 10px; margin-bottom: 12px; align-items: stretch; }
+.design-main {
+  flex: 1.5; background: var(--brown-dark); border-radius: 12px;
+  padding: 16px; position: relative; overflow: hidden;
+  min-height: 106px; display: flex; flex-direction: column; justify-content: space-between;
+}
+.design-main::before { content:''; position:absolute; bottom:-28px; right:-28px; width:90px; height:90px; border-radius:50%; border:1px solid rgba(212,197,169,0.14); }
+.design-main::after  { content:''; position:absolute; bottom:-8px;  right:-8px;  width:54px; height:54px; border-radius:50%; border:1px solid rgba(212,197,169,0.09); }
+.d-letter { font-family:'Cormorant Garamond',serif; font-size:50px; font-weight:300; color:rgba(212,197,169,0.22); line-height:1; position:absolute; top:6px; right:10px; font-style:italic; }
+.d-brand-name { font-family:'Jost',sans-serif; font-size:7.5px; font-weight:500; letter-spacing:0.3em; text-transform:uppercase; color:rgba(212,197,169,0.6); position:relative; z-index:1; }
+.d-tagline { font-family:'Cormorant Garamond',serif; font-size:14px; font-weight:400; color:var(--taupe); font-style:italic; position:relative; z-index:1; }
+.d-divider { height:1px; background:rgba(212,197,169,0.18); position:relative; z-index:1; }
+.d-sub { font-size:7.5px; letter-spacing:0.15em; text-transform:uppercase; color:rgba(212,197,169,0.38); position:relative; z-index:1; }
+.design-side { flex:1; display:flex; flex-direction:column; gap:8px; }
+.design-piece {
+  flex:1; border-radius:10px; border:1px solid var(--card-border);
+  background:var(--cream-dark); padding:10px;
+  display:flex; align-items:center; justify-content:center;
+}
+.dp-1{background:rgba(155,126,90,0.1)} .dp-2{background:rgba(212,197,169,0.28)}
+.dp-geo { width:28px; height:28px; position:relative; }
+.dp-geo span { position:absolute; inset:0; border:1.5px solid var(--bronze); border-radius:2px; }
+.dp-geo span:nth-child(2){ border-color:var(--brown-light); transform:rotate(20deg) scale(0.74); }
+.dp-geo span:nth-child(3){ border-color:var(--taupe); transform:rotate(40deg) scale(0.5); }
+.dp-circle { width:26px; height:26px; border-radius:50%; border:1.5px solid var(--brown); display:flex; align-items:center; justify-content:center; }
+.dp-circle::after { content:''; width:13px; height:13px; background:var(--taupe); border-radius:50%; }
+
+/* ── FOOTER ── */
+footer {
+  position: relative; z-index: 1;
+  padding: 24px 52px;
+  border-top: 1px solid var(--card-border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-copy { font-size: 9.5px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+.footer-mark { font-family: 'Cormorant Garamond', serif; font-size: 12px; font-style: italic; color: var(--brown-light); }
+
+/* ── LIGHTBOX ── */
+.lightbox {
+  display: none; position: fixed; inset: 0; z-index: 1000;
+  background: rgba(30,18,8,0.9); align-items: center; justify-content: center; padding: 24px;
+}
+.lightbox.open { display: flex; }
+.lightbox-inner { max-width: 900px; max-height: 90vh; }
+.lightbox img { max-width: 100%; max-height: 88vh; border-radius: 14px; object-fit: contain; box-shadow: 0 24px 80px rgba(0,0,0,0.5); }
+.lb-close {
+  position: fixed; top: 20px; right: 24px;
+  background: rgba(245,240,232,0.15); border: 1px solid rgba(245,240,232,0.2);
+  color: var(--cream); border-radius: 50%; width: 36px; height: 36px;
+  cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;
+}
+.lb-close:hover { background: rgba(245,240,232,0.25); }
+</style>
 </head>
 <body>
 
-    <div class="portfolio-wrap">
-        <div class="section-block">
-            <div class="activity-grid">
-                
-                <div class="card">
-                    <span class="card-tag">Live & In-Person</span>
-                    <h4>Event Participation</h4>
-                    <p class="card-desc">Workshops and conferences.</p>
-                    <div class="btn-view-cert" onclick="openPreview()">View Certificates</div>
-                </div>
+<!-- ── HEADER ── -->
+<header>
+  <div class="logo-block">
+    <h1>ATITAYA</h1>
+    <span>Professional Portfolio</span>
+  </div>
+  <nav>
+    <a onclick="showPage('home')"   id="nav-home"      class="active">Home</a>
+    <a onclick="showPage('portfolio')" id="nav-portfolio">Portfolio</a>
+    <a onclick="showPage('home')">About</a>
+    <a onclick="showPage('home')">Blog</a>
+    <a onclick="showPage('home')">Contact</a>
+  </nav>
+  <div class="header-social">
+    <a href="#" class="social-btn" aria-label="LinkedIn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+        <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+      </svg>
+    </a>
+    <a href="#" class="social-btn" aria-label="Instagram">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+      </svg>
+    </a>
+    <a href="#" class="social-btn" aria-label="Behance">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 9h9a3 3 0 0 1 0 6H2V4h8a3 3 0 0 1 0 5"/>
+        <path d="M15 8h7M17 12h5M15 16h7"/>
+      </svg>
+    </a>
+    <a href="#" class="social-btn" aria-label="Email">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
+      </svg>
+    </a>
+  </div>
+</header>
 
-                <div class="card">
-                    <span class="card-tag">Design Concepts</span>
-                    <h4>Visual Identity</h4>
-                    <p class="card-desc">Visual identity and branding.</p>
-                    <a href="design-for-football-TU-CU.pdf" target="_blank" class="btn-view-cert">Download PDF</a>
-                </div>
+<!-- ══════════════════════════════════════
+     HOME PAGE
+══════════════════════════════════════ -->
+<div class="page active" id="page-home">
 
-            </div>
-        </div>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-text">
+      <h2>The<br><em>Portfolio.</em></h2>
+      <p class="hero-sub">Creative Direction &nbsp;·&nbsp; Brand Strategy &nbsp;·&nbsp; Communications</p>
+    </div>
+    <div class="hero-actions">
+      <button class="btn-connect" onclick="showPage('portfolio')">View Work</button>
+      <span class="tagline">"Design is how it works."</span>
+    </div>
+  </section>
+
+  <!-- Canva Slide Preview Strip -->
+  <section class="slides-section">
+    <div class="slides-section-label">
+      <span class="slides-num">01</span>
+      <h3>Featured Presentations</h3>
     </div>
 
-    <div class="preview-modal" id="certModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closePreview()">&times;</span>
-            <h2 style="font-family:'Cormorant Garamond'; font-size: 32px; margin-bottom: 20px;">Recognition & Participation</h2>
-            
-            <div class="tabs-nav">
-                <div class="tab-btn active" onclick="switchTab('conferences')">Conferences</div>
-                <div class="tab-btn" onclick="switchTab('workshops')">Workshops</div>
-            </div>
+    <div class="slide-strip">
 
-            <div id="conferences" class="tab-pane active">
-                <a href="#" class="cert-card">
-                    <div class="cert-thumb">📄</div>
-                    <div class="cert-info">
-                        <span class="cert-type-tag tag-conference">Conference</span>
-                        <h5>Global Design Summit</h5>
-                        <p style="font-size: 10px; color: var(--text-muted);">2024 · Participant</p>
-                    </div>
-                </a>
-                </div>
-
-            <div id="workshops" class="tab-pane">
-                <a href="#" class="cert-card">
-                    <div class="cert-thumb">📄</div>
-                    <div class="cert-info">
-                        <span class="cert-type-tag tag-workshop">Workshop</span>
-                        <h5>UI/UX Masterclass</h5>
-                        <p style="font-size: 10px; color: var(--text-muted);">2023 · Certification</p>
-                    </div>
-                </a>
-            </div>
+      <!-- Slide 1 — Hero / Large -->
+      <div class="slide-card" onclick="showPage('portfolio')">
+        <div class="slide-cover sc-1">
+          <div class="cover-deco">A</div>
+          <div class="cover-content">
+            <div class="cover-tag">Brand Strategy · 2024</div>
+            <div class="cover-title" style="font-size:24px;">Brand Identity<br>&amp; Positioning</div>
+            <div class="cover-sub">Strategic Deck · 32 Slides</div>
+          </div>
+          <div class="cover-line"></div>
         </div>
+        <div class="slide-footer">
+          <div>
+            <div class="sf-title">Brand Identity Deck</div>
+            <div class="sf-year">2024</div>
+          </div>
+          <div class="sf-arrow">→</div>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="slide-card" onclick="showPage('portfolio')">
+        <div class="slide-cover sc-2">
+          <div class="cover-deco">K</div>
+          <div class="cover-content">
+            <div class="cover-tag">Keynote</div>
+            <div class="cover-title" style="font-size:16px;">Annual<br>Keynote</div>
+            <div class="cover-sub">18 Slides</div>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div>
+            <div class="sf-title">Annual Keynote</div>
+            <div class="sf-year">2024</div>
+          </div>
+          <div class="sf-arrow">→</div>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="slide-card" onclick="showPage('portfolio')">
+        <div class="slide-cover sc-3">
+          <div class="cover-deco">S</div>
+          <div class="cover-content">
+            <div class="cover-tag">Strategy</div>
+            <div class="cover-title" style="font-size:16px;">Market<br>Strategy</div>
+            <div class="cover-sub">24 Slides</div>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div>
+            <div class="sf-title">Market Strategy</div>
+            <div class="sf-year">2023</div>
+          </div>
+          <div class="sf-arrow">→</div>
+        </div>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="slide-card" onclick="showPage('portfolio')">
+        <div class="slide-cover sc-4">
+          <div class="cover-deco">C</div>
+          <div class="cover-content">
+            <div class="cover-tag">Campaign</div>
+            <div class="cover-title" style="font-size:16px; color:var(--brown-dark)">Campaign<br>Concept</div>
+            <div class="cover-sub" style="color:rgba(62,43,22,0.55)">20 Slides</div>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div>
+            <div class="sf-title">Campaign Concept</div>
+            <div class="sf-year">2023</div>
+          </div>
+          <div class="sf-arrow">→</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <div class="cta-line"></div>
+    <button class="btn-view-all" onclick="showPage('portfolio')">View Full Portfolio</button>
+    <div class="cta-line"></div>
+  </div>
+
+</div><!-- /home -->
+
+
+<!-- ══════════════════════════════════════
+     PORTFOLIO PAGE
+══════════════════════════════════════ -->
+<div class="page" id="page-portfolio">
+  <div class="portfolio-wrap">
+
+    <div class="port-header">
+      <div>
+        <h2>Full <em>Portfolio</em></h2>
+        <h2><em>Portfolio</em></h2>
+      </div>
+      <p>Work &nbsp;·&nbsp; Experience &nbsp;·&nbsp; Skills</p>
     </div>
 
-    <script>
-        function openPreview() {
-            document.getElementById('certModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+    <!-- Section 01 -->
+    <div class="section-block">
+      <div class="section-label">
+        <span class="section-num">01</span>
+        <h3>My Work &amp; Experience</h3>
+      </div>
+      <div class="work-grid">
 
-        function closePreview() {
-            document.getElementById('certModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
+        <!-- Key Presentations -->
+        <div class="card">
+          <div class="blob-bg"></div>
+          <span class="card-tag">Featured Work</span>
+          <h4>Key Presentations</h4>
+          <p class="card-desc">Pitches, keynotes, and concept decks.</p>
+          <div class="slide-miniatures">
+            <div class="slide-mini">
+              <span class="s-title">Keynote</span>
+              <span class="s-dot" style="background:var(--bronze);"></span>
+              <div class="s-lines"><span></span><span></span><span></span></div>
+              <div class="s-bar" style="background:var(--brown);"></div>
+            </div>
+            <div class="slide-mini">
+              <span class="s-title">Strategy</span>
+              <span class="s-dot" style="background:var(--brown-light);"></span>
+              <div class="s-lines"><span></span><span></span></div>
+              <div class="s-bar" style="background:var(--bronze);height:38%;"></div>
+            </div>
+            <div class="slide-mini">
+              <span class="s-title">Brand</span>
+              <span class="s-dot" style="background:var(--taupe);"></span>
+              <div class="s-lines"><span></span><span></span><span></span></div>
+              <div class="s-bar" style="background:var(--brown-dark);height:24%;"></div>
+            </div>
+          </div>
+          <div class="pres-screen">
+            <div class="pres-screen-inner">
+              <div class="pres-logo-e">A</div>
+              <div class="pres-meta">
+                <p>Strategy Deck · 2024</p>
+                <div class="pres-title">Brand Identity &amp; Positioning</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
+        <!-- Experience & Accolades -->
+        <div class="card">
+          <div class="blob-bg"></div>
+          <span class="card-tag">Track Record</span>
+          <h4>Experience &amp; Accolades</h4>
+          <p class="card-desc">Professional history, degrees, and awards.</p>
+          <div class="exp-list">
+            <div class="exp-item">
+              <span class="exp-year">2022</span>
+              <div class="exp-content">
+                <h5>Creative Director</h5>
+                <p>Strategic brand consulting, EMEA region</p>
+              </div>
+              <div class="exp-badge"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+            </div>
+            <div class="exp-item">
+              <span class="exp-year">2019</span>
+              <div class="exp-content">
+                <h5>Communications Lead</h5>
+                <p>International media &amp; PR campaigns</p>
+              </div>
+              <div class="exp-badge"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+            </div>
+            <div class="exp-item">
+              <span class="exp-year">2016</span>
+              <div class="exp-content">
+                <h5>Brand Strategist</h5>
+                <p>Start-up ecosystem, growth &amp; identity</p>
+              </div>
+              <div class="exp-badge"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+            </div>
+          </div>
+          <div class="diploma-graphic">
+            <div class="diploma-seal">✦</div>
+            <div class="diploma-text">
+              <p>M.A. Communications</p>
+              <span>University of Arts · Distinction Honours</span>
+            </div>
+          </div>
+        </div>
 
-        // ปิด Modal เมื่อคลิกพื้นหลัง
-        window.onclick = function(event) {
-            let modal = document.getElementById('certModal');
-            if (event.target == modal) closePreview();
-        }
-    </script>
+      </div>
+    </div>
+
+    <!-- Section 02 -->
+    <div class="section-block">
+      <div class="section-label">
+        <span class="section-num">02</span>
+        <h3>Activities &amp; Scores</h3>
+      </div>
+      <div class="activity-grid">
+
+        <!-- Event Participation -->
+        <div class="card">
+          <div class="blob-bg"></div>
+          <span class="card-tag">Live &amp; In-Person</span>
+    <h4>Event Participation</h4>
+    <p class="card-desc">Workshops and conferences.</p>
+
+    <a href="design-for-football-TU-CU.pdf" target="_blank" class="btn-connect" style="display: inline-block; padding: 7px 16px; font-size: 9px; margin-bottom: 15px; text-decoration: none;">
+        View Certificate
+    </a>
+
+    <div class="event-img">
+        <div class="event-scene">
+            <div class="bg-rect"></div>
+
+              <div class="table-rect"></div>
+              <div class="person" style="left:12%"><div class="p-head"></div><div class="p-body" style="background:rgba(62,43,22,0.5);width:18px;"></div></div>
+              <div class="person" style="left:26%"><div class="p-head" style="width:10px;height:10px;"></div><div class="p-body" style="background:rgba(245,240,232,0.4);width:14px;height:16px;"></div></div>
+              <div class="person" style="left:40%;bottom:30px"><div class="p-head" style="width:13px;height:13px;background:rgba(245,240,232,0.6);"></div><div class="p-body" style="background:rgba(139,107,71,0.7);width:18px;"></div></div>
+              <div class="person" style="left:55%"><div class="p-head" style="background:rgba(245,240,232,0.5);"></div><div class="p-body" style="background:rgba(62,43,22,0.45);"></div></div>
+              <div class="person" style="left:68%"><div class="p-head" style="width:11px;height:11px;"></div><div class="p-body" style="background:rgba(196,168,130,0.6);width:15px;height:17px;"></div></div>
+              <div class="person" style="left:80%;bottom:26px"><div class="p-head" style="width:13px;height:13px;background:rgba(245,240,232,0.65);"></div><div class="p-body" style="background:rgba(107,76,42,0.6);width:18px;height:20px;"></div></div>
+              <div class="event-label">Workshop · 2024</div>
+              <div class="event-count">14 events</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skills & Scores -->
+        <div class="card">
+          <div class="blob-bg"></div>
+          <span class="card-tag">Verified Aptitudes</span>
+          <h4>Skills &amp; Scores</h4>
+          <p class="card-desc">Verified aptitudes and test results.</p>
+          <div class="skill-bars">
+            <div class="skill-row"><span class="skill-name">Brand Strategy</span><div class="skill-track"><div class="skill-fill" style="width:94%"></div></div><span class="skill-pct">94%</span></div>
+            <div class="skill-row"><span class="skill-name">Communications</span><div class="skill-track"><div class="skill-fill" style="width:91%"></div></div><span class="skill-pct">91%</span></div>
+            <div class="skill-row"><span class="skill-name">Visual Design</span><div class="skill-track"><div class="skill-fill" style="width:88%"></div></div><span class="skill-pct">88%</span></div>
+            <div class="skill-row"><span class="skill-name">Copywriting</span><div class="skill-track"><div class="skill-fill" style="width:85%"></div></div><span class="skill-pct">85%</span></div>
+          </div>
+          <div class="badges">
+            <span class="badge">Google Certified</span>
+            <span class="badge">HubSpot Pro</span>
+            <span class="badge">Adobe CC</span>
+            <span class="badge">IELTS 8.5</span>
+          </div>
+        </div>
+
+        <!-- Social Media -->
+        <div class="card">
+          <div class="blob-bg"></div>
+          <span class="card-tag">Online Community</span>
+          <h4>Social Media Engagement</h4>
+          <p class="card-desc">Online community highlights.</p>
+          <div class="social-previews">
+            <div class="social-preview">
+              <div class="sp-header"><div class="sp-avatar" style="background:linear-gradient(135deg,#C4A882,#6B4C2A);"></div><span class="sp-uname">@atitaya</span></div>
+              <div class="ig-grid"><div class="ig-cell"><div class="pattern"></div></div><div class="ig-cell"><div class="pattern"></div></div><div class="ig-cell"><div class="pattern"></div></div><div class="ig-cell"><div class="pattern"></div></div></div>
+              <div class="sp-footer"><span class="sp-heart">♥</span><span class="sp-count">2.4k</span></div>
+            </div>
+            <div class="social-preview">
+              <div class="sp-header"><div class="sp-avatar" style="background:#0A66C2;opacity:0.7;"></div><span class="sp-uname">LinkedIn</span></div>
+              <div style="padding:5px;flex:1;">
+                <div style="height:2px;background:rgba(62,43,22,0.18);border-radius:1px;margin-bottom:3px;"></div>
+                <div style="height:2px;background:rgba(62,43,22,0.13);border-radius:1px;width:80%;margin-bottom:3px;"></div>
+                <div style="height:2px;background:rgba(62,43,22,0.09);border-radius:1px;width:55%;"></div>
+                <div style="margin-top:5px;height:28px;background:var(--cream-dark);border-radius:4px;"></div>
+              </div>
+              <div class="sp-footer"><span class="sp-heart">▲</span><span class="sp-count">847</span></div>
+            </div>
+            <div class="social-preview">
+              <div class="sp-header"><div class="sp-avatar" style="background:#1769FF;opacity:0.7;"></div><span class="sp-uname">Behance</span></div>
+              <div class="be-color"><div class="be-letter">A</div><span class="be-tag">Project</span></div>
+              <div class="sp-footer"><span class="sp-heart">◈</span><span class="sp-count">1.1k</span></div>
+            </div>
+          </div>
+          <div class="engagement-row">
+            <div class="eng-stat"><span class="e-val">12.4k</span><span class="e-label">Followers</span></div>
+            <div class="eng-stat"><span class="e-val">4.8%</span><span class="e-label">Engagement</span></div>
+            <div class="eng-stat"><span class="e-val">340+</span><span class="e-label">Posts</span></div>
+          </div>
+        </div>
+
+        <!-- Design Concepts -->
+        <div class="card">
+          <div class="blob-bg"></div>
+          <span class="card-tag">Visual Identity</span>
+          <h4>Design Concepts</h4>
+          <p class="card-desc">Visual identity and branding.</p>
+          <div class="design-showcase">
+            <div class="design-main">
+              <div class="d-letter">A</div>
+              <span class="d-brand-name">ATITAYA · Studio</span>
+              <div style="height:8px;"></div>
+              <span class="d-tagline">Craft &amp; Clarity</span>
+              <div class="d-divider" style="margin:8px 0;"></div>
+              <span class="d-sub">Brand Identity · 2024</span>
+            </div>
+            <div class="design-side">
+              <div class="design-piece dp-1">
+                <div class="dp-geo"><span></span><span></span><span></span></div>
+              </div>
+              <div class="design-piece dp-2">
+                <div class="dp-circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div><!-- /portfolio -->
+
+<!-- ── FOOTER ── -->
+<footer>
+  <span class="footer-copy">© 2024 ATITAYA</span>
+  <span class="footer-mark">All works reserved.</span>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-inner"><img id="lb-img" src="" alt=""></div>
+  <button class="lb-close" onclick="closeLightbox()">×</button>
+</div>
+
+<script>
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function closeLightbox(e) {
+  if (e && e.target !== e.currentTarget && !e.target.classList.contains('lb-close')) return;
+  document.getElementById('lightbox').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
+</script>
 </body>
 </html>
-"""
+
+
